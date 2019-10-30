@@ -18,7 +18,14 @@ function something(req, res, next) {
 server.get("/something", (req, res) => {
   res.status(200).json({ welcome: "I hope this works!" });
 });
-
+function gate(req, res, next) {
+  const password = req.headers.password;
+  if (password && password === "melon") {
+    next();
+  } else {
+    res.status(401).json({ Error: "Wrong password" });
+  }
+};
 server.get("/", (req, res) => {
   const nameInsert = req.name ? ` ${req.name}` : "";
 
